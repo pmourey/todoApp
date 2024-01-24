@@ -4,8 +4,6 @@
 #### Graphical calculator: https://philrg.glitch.me/calculatrice.html
 
 
-#### webhosting Vercel (under construction)
-
 - Webhosting pricing:
     - https://vercel.com/pricing
     - https://www.netlify.com/pricing/
