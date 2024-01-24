@@ -44,7 +44,7 @@
     $scope.newTask = '';
 
     // Fetch tasks from the server
-    $http.get('http://philippe.mourey.com:1999/tasks')
+    $http.get('/tasks')
       .then(function(response) {
         $scope.tasks = response.data;
       })
@@ -55,7 +55,7 @@
     $scope.addTask = function() {
       if ($scope.newTask.trim() !== '') {
         // Add task to the server
-        $http.post('http://philippe.mourey.com:1999/tasks', {
+        $http.post('/tasks', {
           title: $scope.newTask,
           completed: false
         })
@@ -78,7 +78,7 @@
 
     $scope.updateTask = function(task) {
       // Update task on the server
-      $http.put('http://philippe.mourey.com:1999/tasks/' + task.id, task)
+      $http.put('/tasks/' + task.id, task)
         .then(function(response) {
           console.log(response.data.message);
         })
@@ -89,7 +89,7 @@
 
     $scope.removeTask = function(task) {
       // Remove task from the server
-      $http.delete('http://philippe.mourey.com:1999/tasks/' + task.id)
+      $http.delete('/tasks/' + task.id)
         .then(function(response) {
           // Remove the task from the local list
           var index = $scope.tasks.indexOf(task);
