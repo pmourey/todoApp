@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html ng-app="todoApp">
+<head>
+  <title>AngularJS To-Do List</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <style>
+    .task-list {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .task {
+      margin: 5px;
+    }
+
+    .completed-task {
+      text-decoration: line-through;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+<div ng-controller="TodoController">
+  <h2>To-Do List</h2>
+
+  <input type="text" ng-model="newTask" placeholder="Add a new task">
+  <button ng-click="addTask()">Add</button>
+
+  <ul class="task-list">
+    <li ng-repeat="task in tasks" ng-class="{ 'task': true, 'completed-task': task.completed }">
+      <input type="checkbox" ng-model="task.completed" ng-change="updateTask(task)">
+      {{ task.title }}
+      <button ng-click="removeTask(task)">Remove</button>
+    </li>
+  </ul>
+</div>
+
+<script>
+  var app = angular.module('todoApp', []);
+
+  app.controller('TodoController', function($scope, $http) {
+    $scope.tasks = [];
+    $scope.newTask = '';
+
+    // Fetch tasks from the server
+    $http.get('http://philippe.mourey.com:1999/tasks')
+      .then(function(response) {
+        $scope.tasks = response.data;
+      })
+      .catch(function(error) {
+        console.error('Error fetching tasks:', error);
+      });
+
+    $scope.addTask = function() {
+      if ($scope.newTask.trim() !== '') {
+        // Add task to the server
+        $http.post('http://philippe.mourey.com:1999/tasks', {
+          title: $scope.newTask,
+          completed: false
+        })
+        .then(function(response) {
+          // Add the new task to the local list
+          $scope.tasks.push({
+            id: response.data.id,
+            title: $scope.newTask,
+            completed: false
+          });
+
+          // Clear the input field
+          $scope.newTask = '';
+        })
+        .catch(function(error) {
+          console.error('Error adding task:', error);
+        });
+      }
+    };
+
+    $scope.updateTask = function(task) {
+      // Update task on the server
+      $http.put('http://philippe.mourey.com:1999/tasks/' + task.id, task)
+        .then(function(response) {
+          console.log(response.data.message);
+        })
+        .catch(function(error) {
+          console.error('Error updating task:', error);
+        });
+    };
+
+    $scope.removeTask = function(task) {
+      // Remove task from the server
+      $http.delete('http://philippe.mourey.com:1999/tasks/' + task.id)
+        .then(function(response) {
+          // Remove the task from the local list
+          var index = $scope.tasks.indexOf(task);
+          if (index !== -1) {
+            $scope.tasks.splice(index, 1);
+          }
+        })
+        .catch(function(error) {
+          console.error('Error removing task:', error);
+        });
+    };
+  });
+</script>
+
+</body>
+</html>

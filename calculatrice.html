@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html ng-app="graphicalCalculatorApp">
+<head>
+  <title>Graphical Calculator with AngularJS</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <style>
+    .calculator {
+      width: 300px;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    input[type="number"], select, button {
+      margin: 5px;
+      padding: 8px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+<div ng-controller="GraphicalCalculatorController" class="calculator">
+  <h2>Graphical Calculator</h2>
+
+  <div>
+    <button ng-click="addToExpression('1')">1</button>
+    <button ng-click="addToExpression('2')">2</button>
+    <button ng-click="addToExpression('3')">3</button>
+    <button ng-click="addToExpression('+')">+</button>
+  </div>
+
+  <div>
+    <button ng-click="addToExpression('4')">4</button>
+    <button ng-click="addToExpression('5')">5</button>
+    <button ng-click="addToExpression('6')">6</button>
+    <button ng-click="addToExpression('-')">-</button>
+  </div>
+
+  <div>
+    <button ng-click="addToExpression('7')">7</button>
+    <button ng-click="addToExpression('8')">8</button>
+    <button ng-click="addToExpression('9')">9</button>
+    <button ng-click="addToExpression('*')">*</button>
+  </div>
+
+  <div>
+    <button ng-click="addToExpression('0')">0</button>
+    <button ng-click="clearExpression()">C</button>
+    <button ng-click="calculate()">=</button>
+    <button ng-click="addToExpression('/')">/</button>
+  </div>
+
+  <div>
+    <label>Result:</label>
+    <input type="text" ng-model="expression" readonly>
+  </div>
+</div>
+
+<script>
+  var app = angular.module('graphicalCalculatorApp', []);
+
+  app.controller('GraphicalCalculatorController', function($scope) {
+    $scope.expression = '';
+    $scope.result = 0;
+
+    $scope.addToExpression = function(value) {
+      $scope.expression += value;
+    };
+
+    $scope.clearExpression = function() {
+      $scope.expression = '';
+      $scope.result = 0;
+    };
+
+    $scope.calculate = function() {
+      try {
+        $scope.result = eval($scope.expression);
+        $scope.expression = $scope.result.toString();
+      } catch (error) {
+        $scope.result = 'Error';
+      }
+    };
+  });
+</script>
+
+</body>
+</html>
