@@ -5,9 +5,9 @@
 #### webhosting Vercel (under construction)
 
 - Webhosting pricing:
-    https://vercel.com/pricing
-    https://www.netlify.com/pricing/
-    https://glitch.com/pricing
+    - https://vercel.com/pricing
+    - https://www.netlify.com/pricing/
+    - https://glitch.com/pricing
 
 
 - Setup instructions:
