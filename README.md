@@ -1,4 +1,4 @@
-### Sample angularJS app hosting a todoApp (using SQLite db) and a graphical calculator
+### Sample expressJS app hosting a todoApp (using SQLite db) and a graphical calculator
 
 #### Todo App: https://philrg.glitch.me/
 #### Graphical calculator: https://philrg.glitch.me/calculatrice.html
